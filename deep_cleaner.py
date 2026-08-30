@@ -1,0 +1,43 @@
+﻿import glob
+import re
+
+replacer = {
+    'â „ï¸ ': '❄️ ',
+    'ðŸš«': '🚫',
+    'ðŸ“ ': '📍',
+    'ðŸ ¢': '🏢',
+    'âš ï¸ ': '⚠️',
+    'Â·': '·',
+    '&nbsp;Â·&nbsp;': '&nbsp;·&nbsp;',
+    'â„¹ï¸ ': 'ℹ️',
+    'â† ': '←',
+    'âœ“': '✓',
+    'âœ—': '✗',
+    'â„¹': 'ℹ️',
+    'âš': '⚠️',
+    'â‚¹': '₹',
+    'ðŸ‘¨â€ ðŸŒ¾': '👨‍🌾'
+}
+
+files_to_fix = [
+    'components/common/cards.py',
+    'pages/02_Market_Prices.py',
+    'pages/10_Farmer_Dashboard.py',
+    'pages/20_Buyer_Dashboard.py',
+    'services/matching_service.py'
+]
+
+for fpath in files_to_fix:
+    try:
+        with open(fpath, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        for k, v in replacer.items():
+            content = content.replace(k, v)
+            
+        with open(fpath, 'w', encoding='utf-8') as f:
+            f.write(content)
+        print(f"Fixed {fpath}")
+    except Exception as e:
+        print(f"Error skipping {fpath}")
+
